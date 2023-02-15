@@ -7,6 +7,7 @@ import {
 import * as bcrypt from 'bcrypt'
 import { errors } from 'src/common/errors'
 import { CreateUserDto } from '../users/dto'
+import { UserResponse } from '../users/response'
 import { UsersService } from '../users/users.service'
 import { UserLoginDto } from './dto'
 
@@ -14,7 +15,7 @@ import { UserLoginDto } from './dto'
 export class AuthService {
 	constructor(private readonly usersService: UsersService) {}
 
-	async login(dto: UserLoginDto): Promise<CreateUserDto> {
+	async login(dto: UserLoginDto): Promise<UserResponse> {
 		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
 		try {
 			const existUser = await this.usersService.findUserByEmail(dto.email)
@@ -35,7 +36,7 @@ export class AuthService {
 		}
 	}
 
-	async register(dto: CreateUserDto): Promise<CreateUserDto> {
+	async register(dto: CreateUserDto): Promise<UserResponse> {
 		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
 
 		try {

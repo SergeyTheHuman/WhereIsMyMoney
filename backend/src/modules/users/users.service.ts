@@ -5,6 +5,7 @@ import { errors } from 'src/common/errors'
 import { users } from 'src/mocks/users'
 import { CreateUserDto } from './dto'
 import { User } from './models/user.model'
+import { UserResponse } from './response'
 
 @Injectable()
 export class UsersService {
@@ -16,7 +17,7 @@ export class UsersService {
 		return bcrypt.hash(password, 8)
 	}
 
-	async findUserByEmail(email: string): Promise<User> {
+	async findUserByEmail(email: string): Promise<UserResponse> {
 		return this.userRepository.findOne({
 			where: {
 				email,
@@ -24,7 +25,7 @@ export class UsersService {
 		})
 	}
 
-	async findUserByUserName(userName: string): Promise<User> {
+	async findUserByUserName(userName: string): Promise<UserResponse> {
 		return this.userRepository.findOne({
 			where: {
 				userName,
@@ -32,7 +33,7 @@ export class UsersService {
 		})
 	}
 
-	async createUser(dto: CreateUserDto): Promise<CreateUserDto> {
+	async createUser(dto: CreateUserDto): Promise<UserResponse> {
 		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
 
 		try {
@@ -52,10 +53,10 @@ export class UsersService {
 		}
 	}
 
-	async getUsers(): Promise<User[]> {
+	async getUsers(): Promise<UserResponse[]> {
 		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
 		try {
-			return this.userRepository.findAll()
+			return this.userRepository.findAll({})
 		} catch (e) {
 			throw error
 		}
