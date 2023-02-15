@@ -2,10 +2,9 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
 import * as bcrypt from 'bcrypt'
 import { errors } from 'src/common/errors'
-import { users } from 'src/mocks/users'
 import { CreateUserDto } from './dto'
-import { User } from './models/user.model'
-import { UserResponse } from './response'
+import { User } from './models'
+import { UserResponse, UserResponsePublic } from './response'
 
 @Injectable()
 export class UsersService {
@@ -29,6 +28,17 @@ export class UsersService {
 		return this.userRepository.findOne({
 			where: {
 				userName,
+			},
+		})
+	}
+
+	async getUserPublic(email: string): Promise<UserResponsePublic> {
+		return this.userRepository.findOne({
+			where: {
+				email,
+			},
+			attributes: {
+				exclude: ['password'],
 			},
 		})
 	}

@@ -1,6 +1,14 @@
-import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common'
+import {
+	Body,
+	Controller,
+	Get,
+	HttpCode,
+	Post,
+	UseGuards,
+} from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
-import { User } from './models/user.model'
+import { JwtAuthGuard } from 'src/guards/jwt-guard'
+import { User } from './models'
 import { UserResponse } from './response'
 import { UsersService } from './users.service'
 
@@ -11,6 +19,7 @@ export class UsersController {
 
 	@ApiOperation({ summary: 'Get all users' })
 	@ApiResponse({ status: 200, type: [User] })
+	@UseGuards(JwtAuthGuard)
 	@Get('get-all-users')
 	@HttpCode(200)
 	async getUsers(): Promise<UserResponse[]> {

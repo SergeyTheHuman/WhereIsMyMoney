@@ -42,7 +42,7 @@ export class AuthService {
 				email: existUser.email,
 				userName: existUser.userName,
 			})
-
+			
 			return { ...existUser, token }
 		} catch (e) {
 			throw error
