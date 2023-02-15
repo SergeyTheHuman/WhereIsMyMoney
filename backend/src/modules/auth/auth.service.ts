@@ -28,6 +28,7 @@ export class AuthService {
 				error = new BadRequestException(errors.WRONG_PASSWORD)
 				throw new Error()
 			}
+			
 			return existUser
 		} catch (e) {
 			throw error
