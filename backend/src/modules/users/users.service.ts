@@ -52,7 +52,12 @@ export class UsersService {
 		}
 	}
 
-	async getUsers() {
-		return users
+	async getUsers(): Promise<User[]> {
+		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
+		try {
+			return this.userRepository.findAll()
+		} catch (e) {
+			throw error
+		}
 	}
 }

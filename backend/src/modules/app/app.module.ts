@@ -5,8 +5,8 @@ import configurations from 'src/configurations'
 import { AuthModule } from 'src/modules/auth/auth.module'
 import { User } from 'src/modules/users/models/user.model'
 import { UsersModule } from 'src/modules/users/users.module'
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
+// import { AppController } from './app.controller'
+// import { AppService } from './app.service'
 
 @Module({
 	imports: [
@@ -32,7 +32,7 @@ import { AppService } from './app.service'
 		UsersModule,
 		AuthModule,
 	],
-	controllers: [AppController],
-	providers: [AppService],
+	controllers: [],
+	providers: [],
 })
 export class AppModule {}
