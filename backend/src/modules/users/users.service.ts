@@ -30,9 +30,10 @@ export class UsersService {
 	}
 
 	async createUser(dto: CreateUserDto): Promise<CreateUserDto> {
+		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
 		try {
 			const existUser = await this.findUserByEmail(dto.email)
-			if (!!existUser) throw new BadRequestException(errors.USER_EXIST)
+			if (!!existUser) error = new BadRequestException(errors.USER_EXIST)
 
 			dto.password = await this.hashPassword(dto.password)
 
@@ -45,13 +46,8 @@ export class UsersService {
 
 			await this.userRepository.create(newUser)
 			return dto
-		} catch (error) {
-			// TODO: Разобраться с ошибками (как их менять правильно?)
-			if (error.message) {
-				throw error
-			} else {
-				throw new InternalServerErrorException(errors.SOMETHING_WRONG)
-			}
+		} catch (e) {
+			throw error
 		}
 	}
 
