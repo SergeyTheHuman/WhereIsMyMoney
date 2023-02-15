@@ -1,7 +1,6 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from '../users/dto';
-import { User } from '../users/models/user.model';
 import { UserResponse, UserResponseWithToken } from '../users/response';
 import { AuthService } from './auth.service';
 import { UserLoginDto } from './dto';
@@ -20,7 +19,7 @@ export class AuthController {
 	}
 	
 	@ApiOperation({ summary: 'Login in account' })
-	@ApiResponse({ status: 200, type: [User] })
+	@ApiResponse({ status: 200, type: [UserResponseWithToken] })
 	@Post('login')
 	@HttpCode(200)
 	login(@Body() dto: UserLoginDto): Promise<UserResponseWithToken>  {
