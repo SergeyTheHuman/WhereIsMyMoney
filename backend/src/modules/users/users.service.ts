@@ -1,11 +1,6 @@
-import {
-	BadRequestException,
-	Injectable,
-	InternalServerErrorException,
-} from '@nestjs/common'
+import { Injectable, InternalServerErrorException } from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
 import * as bcrypt from 'bcrypt'
-import { where } from 'sequelize'
 import { errors } from 'src/common/errors'
 import { users } from 'src/mocks/users'
 import { CreateUserDto } from './dto'
@@ -29,12 +24,18 @@ export class UsersService {
 		})
 	}
 
+	async findUserByUserName(userName: string): Promise<User> {
+		return this.userRepository.findOne({
+			where: {
+				userName,
+			},
+		})
+	}
+
 	async createUser(dto: CreateUserDto): Promise<CreateUserDto> {
 		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
-		try {
-			const existUser = await this.findUserByEmail(dto.email)
-			if (!!existUser) error = new BadRequestException(errors.USER_EXIST)
 
+		try {
 			dto.password = await this.hashPassword(dto.password)
 
 			const newUser = {
