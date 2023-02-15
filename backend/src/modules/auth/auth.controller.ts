@@ -2,7 +2,7 @@ import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from '../users/dto';
 import { User } from '../users/models/user.model';
-import { UserResponse } from '../users/response';
+import { UserResponse, UserResponseWithToken } from '../users/response';
 import { AuthService } from './auth.service';
 import { UserLoginDto } from './dto';
 
@@ -23,7 +23,7 @@ export class AuthController {
 	@ApiResponse({ status: 200, type: [User] })
 	@Post('login')
 	@HttpCode(200)
-	login(@Body() dto: UserLoginDto): Promise<UserResponse> {
+	login(@Body() dto: UserLoginDto): Promise<UserResponseWithToken>  {
 		return this.authService.login(dto)
 	}
 }

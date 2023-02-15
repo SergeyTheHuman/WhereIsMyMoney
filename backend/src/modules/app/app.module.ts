@@ -5,8 +5,7 @@ import configurations from 'src/configurations'
 import { AuthModule } from 'src/modules/auth/auth.module'
 import { User } from 'src/modules/users/models/user.model'
 import { UsersModule } from 'src/modules/users/users.module'
-// import { AppController } from './app.controller'
-// import { AppService } from './app.service'
+import { TokenModule } from '../token/token.module'
 
 @Module({
 	imports: [
@@ -31,6 +30,7 @@ import { UsersModule } from 'src/modules/users/users.module'
 		}),
 		UsersModule,
 		AuthModule,
+		TokenModule,
 	],
 	controllers: [],
 	providers: [],
