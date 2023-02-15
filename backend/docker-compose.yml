@@ -1,0 +1,19 @@
+version: '3'
+services:
+   postgresql:
+      image: postgres
+      container_name: whereIsMyMoney-db
+      ports:
+         - '5432:5432'
+      environment:
+         - POSTGRES_HOST=localhost
+         - POSTGRES_USER=SergeyTheHuman
+         - POSTGRES_PASSWORD=42531682
+         - POSTGRES_DATABASE=whereIsMyMoney-
+      command: postgres
+      restart: always
+   redis:
+      image: redis:alpine3.14
+      container_name: whereIsMyMoney-redis
+      ports:
+         - '6379:6379'
