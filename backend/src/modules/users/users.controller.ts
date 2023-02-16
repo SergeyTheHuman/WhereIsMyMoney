@@ -3,13 +3,16 @@ import {
 	Controller,
 	Get,
 	HttpCode,
-	Post,
+	Patch,
+	Req,
 	UseGuards,
 } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { Request } from 'express'
 import { JwtAuthGuard } from 'src/guards/jwt-guard'
+import { UpdateUserDto } from './dto'
 import { User } from './models'
-import { UserResponse } from './response'
+import { UserResponse, UserResponsePublic } from './response'
 import { UsersService } from './users.service'
 
 @ApiTags('Users')
@@ -24,5 +27,19 @@ export class UsersController {
 	@HttpCode(200)
 	async getUsers(): Promise<UserResponse[]> {
 		return this.usersService.getUsers()
+	}
+
+	@ApiOperation({ summary: 'Update profile' })
+	@ApiResponse({ status: 200, type: UserResponsePublic })
+	@UseGuards(JwtAuthGuard)
+	@HttpCode(200)
+	@Patch('update')
+	async updateUser(
+		@Body() dto: UpdateUserDto,
+		@Req() request: Request,
+	): Promise<UserResponsePublic> {
+		const user = request.user as UpdateUserDto
+
+		return this.usersService.update(user.email, dto)
 	}
 }

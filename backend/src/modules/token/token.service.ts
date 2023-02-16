@@ -14,7 +14,7 @@ export class TokenService {
 	async generateJwtToken(user: CreateTokenDto): Promise<string> {
 		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
 		try {
-			const payload = { user }
+			const payload = { ...user }
 			return this.jwtService.sign(payload, {
 				secret: this.configService.get('jwt_secret'),
 				expiresIn: this.configService.get('jwt_expire_time'),

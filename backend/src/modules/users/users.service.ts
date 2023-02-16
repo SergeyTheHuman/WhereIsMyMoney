@@ -2,7 +2,7 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
 import * as bcrypt from 'bcrypt'
 import { errors } from 'src/common/errors'
-import { CreateUserDto } from './dto'
+import { CreateUserDto, UpdateUserDto } from './dto'
 import { User } from './models'
 import { UserResponse, UserResponsePublic } from './response'
 
@@ -69,6 +69,23 @@ export class UsersService {
 		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
 		try {
 			return this.userRepository.findAll({})
+		} catch (e) {
+			throw error
+		}
+	}
+
+	async update(
+		email: string,
+		dto: UpdateUserDto,
+	): Promise<UserResponsePublic> {
+		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
+		try {
+			await this.userRepository.update(dto, {
+				where: {
+					email,
+				},
+			})
+			return dto
 		} catch (e) {
 			throw error
 		}
