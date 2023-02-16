@@ -8,7 +8,10 @@ import * as bcrypt from 'bcrypt'
 import { errors } from 'src/common/errors'
 import { TokenService } from '../token/token.service'
 import { CreateUserDto } from '../users/dto'
-import { UserResponse, UserResponseWithToken } from '../users/response'
+import {
+	UserResponsePublic,
+	UserResponsePublicWithToken,
+} from '../users/response'
 import { UsersService } from '../users/users.service'
 import { UserLoginDto } from './dto'
 
@@ -19,7 +22,7 @@ export class AuthService {
 		private readonly tokenService: TokenService,
 	) {}
 
-	async login(dto: UserLoginDto): Promise<UserResponseWithToken> {
+	async login(dto: UserLoginDto): Promise<UserResponsePublicWithToken> {
 		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
 		try {
 			const existUser = await this.usersService.findUserByEmail(dto.email)
@@ -42,14 +45,16 @@ export class AuthService {
 				email: existUser.email,
 				userName: existUser.userName,
 			})
-			
-			return { ...existUser, token }
+
+			const user = await this.usersService.getUserPublic(dto.email)
+
+			return { ...user, token }
 		} catch (e) {
 			throw error
 		}
 	}
 
-	async register(dto: CreateUserDto): Promise<UserResponse> {
+	async register(dto: CreateUserDto): Promise<UserResponsePublic> {
 		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
 
 		try {

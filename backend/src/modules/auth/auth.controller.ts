@@ -1,7 +1,7 @@
 import { Body, Controller, HttpCode, Post, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from '../users/dto';
-import { UserResponse, UserResponseWithToken } from '../users/response';
+import { UserResponse, UserResponsePublic, UserResponsePublicWithToken, UserResponseWithToken } from '../users/response';
 import { AuthService } from './auth.service';
 import { UserLoginDto } from './dto';
 
@@ -14,7 +14,7 @@ export class AuthController {
 	@ApiResponse({ status: 200, type: [CreateUserDto] })
 	@Post('register')
 	@HttpCode(200)
-	register(@Body() dto: CreateUserDto): Promise<UserResponse> {
+	register(@Body() dto: CreateUserDto): Promise<UserResponsePublic> {
 		return this.authService.register(dto)
 	}
 	
@@ -22,7 +22,7 @@ export class AuthController {
 	@ApiResponse({ status: 200, type: [UserResponseWithToken] })
 	@Post('login')
 	@HttpCode(200)
-	login(@Body() dto: UserLoginDto): Promise<UserResponseWithToken>  {
+	login(@Body() dto: UserLoginDto): Promise<UserResponsePublicWithToken>  {
 		return this.authService.login(dto)
 	}
 }

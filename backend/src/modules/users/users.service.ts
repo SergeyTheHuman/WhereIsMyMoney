@@ -43,7 +43,7 @@ export class UsersService {
 		})
 	}
 
-	async createUser(dto: CreateUserDto): Promise<UserResponse> {
+	async createUser(dto: CreateUserDto): Promise<UserResponsePublic> {
 		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
 
 		try {
@@ -57,6 +57,8 @@ export class UsersService {
 			}
 
 			await this.userRepository.create(newUser)
+			delete dto.password
+
 			return dto
 		} catch (e) {
 			throw error
