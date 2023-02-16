@@ -24,7 +24,7 @@ export class UsersController {
 	@ApiOperation({ summary: 'Get all users' })
 	@ApiResponse({ status: 200, type: [User] })
 	@UseGuards(JwtAuthGuard)
-	@Get('get-all-users')
+	@Get('get-all')
 	@HttpCode(200)
 	async getUsers(): Promise<UserResponse[]> {
 		return this.usersService.getUsers()
