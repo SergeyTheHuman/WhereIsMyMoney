@@ -7,7 +7,6 @@ import {
 	Param,
 	Post,
 	Put,
-	Query,
 	Req,
 	UseGuards,
 } from '@nestjs/common'
@@ -33,7 +32,7 @@ export class ProductsController {
 		@Req() request: Request,
 	): Promise<ProductResponse> {
 		const user = request.user as UpdateUserDto
-		return this.productService.create(user, dto)
+		return this.productService.create(user.email, dto)
 	}
 
 	@ApiOperation({ summary: 'Get all products' })

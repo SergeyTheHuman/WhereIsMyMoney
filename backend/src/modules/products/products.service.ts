@@ -37,17 +37,14 @@ export class ProductsService {
 	}
 
 	async create(
-		user: UpdateUserDto,
+		email: string,
 		dto: CreateProductDto,
 	): Promise<ProductResponse> {
 		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
 		try {
-			const currentUserId = await this.usersService.getUserIdByEmail(
-				user.email,
-			)
+			const currentUserId = await this.usersService.getUserIdByEmail(email)
 
 			const product = {
-				user,
 				user_id: currentUserId,
 				name: dto.name,
 				price: dto.price,
@@ -95,7 +92,7 @@ export class ProductsService {
 					id,
 				},
 			})
-			
+
 			return dto
 		} catch (e) {
 			throw error
