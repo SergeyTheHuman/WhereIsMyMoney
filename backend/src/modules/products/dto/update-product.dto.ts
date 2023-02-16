@@ -15,4 +15,11 @@ export class UpdateProductDto {
 	})
 	@IsNumber()
 	price: number
+
+	@ApiProperty({
+		example: '2',
+		description: 'Category id',
+	})
+	@IsNumber()
+	category_id: number
 }

@@ -46,6 +46,7 @@ export class ProductsService {
 
 			const product = {
 				user_id: currentUserId,
+				category_id: dto.category_id,
 				name: dto.name,
 				price: dto.price,
 			}
