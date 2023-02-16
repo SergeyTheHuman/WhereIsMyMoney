@@ -5,6 +5,8 @@ import configurations from 'src/configurations'
 import { AuthModule } from 'src/modules/auth/auth.module'
 import { User } from 'src/modules/users/models'
 import { UsersModule } from 'src/modules/users/users.module'
+import { Product } from '../products/models'
+import { ProductsModule } from '../products/products.module'
 import { TokenModule } from '../token/token.module'
 
 @Module({
@@ -25,12 +27,13 @@ import { TokenModule } from '../token/token.module'
 				database: configService.get('db_database'),
 				synchronize: true,
 				autoLoadModels: true,
-				models: [User],
+				models: [User, Product],
 			}),
 		}),
 		UsersModule,
 		AuthModule,
 		TokenModule,
+		ProductsModule,
 	],
 	controllers: [],
 	providers: [],

@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { Column, DataType, Model, Table } from 'sequelize-typescript'
+import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript'
+import { Product } from 'src/modules/products/models'
 
 @Table({ tableName: 'Users' })
 export class User extends Model {
@@ -46,4 +47,10 @@ export class User extends Model {
 		type: DataType.STRING,
 	})
 	password: string
+
+	@HasMany(() => Product, {
+		onDelete: 'CASCADE',
+		onUpdate: 'CASCADE',
+	})
+	products: Product[]
 }
