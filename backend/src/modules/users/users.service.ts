@@ -80,12 +80,17 @@ export class UsersService {
 	): Promise<UserResponsePublic> {
 		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
 		try {
-			await this.userRepository.update(dto, {
-				where: {
-					email,
-				},
-			})
+			await this.userRepository.update(dto, { where: { email } })
 			return dto
+		} catch (e) {
+			throw error
+		}
+	}
+
+	async delete(email: string): Promise<boolean>{
+		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
+		try {
+			return !!this.userRepository.destroy({where: {email}})
 		} catch (e) {
 			throw error
 		}

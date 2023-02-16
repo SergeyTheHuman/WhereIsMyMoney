@@ -1,6 +1,7 @@
 import {
 	Body,
 	Controller,
+	Delete,
 	Get,
 	HttpCode,
 	Patch,
@@ -41,5 +42,16 @@ export class UsersController {
 		const user = request.user as UpdateUserDto
 
 		return this.usersService.update(user.email, dto)
+	}
+
+	@ApiOperation({ summary: 'Delete profile' })
+	@ApiResponse({ status: 200, type: Boolean })
+	@UseGuards(JwtAuthGuard)
+	@HttpCode(200)
+	@Delete('delete')
+	async deleteUser(@Req() request: Request): Promise<boolean> {
+		const user = request.user as UpdateUserDto
+
+		return this.usersService.delete(user.email)
 	}
 }
