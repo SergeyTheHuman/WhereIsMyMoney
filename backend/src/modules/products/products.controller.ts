@@ -53,7 +53,7 @@ export class ProductsController {
 	@UseGuards(JwtAuthGuard)
 	@Get('get-all-by-category')
 	@HttpCode(200)
-	async getAllByCategory(@Query('cat_id') category_id: number, @Req() request: Request): Promise<ProductResponse[]> {
+	async getAllByCategory(@Query('cat_id') category_id: number | "null", @Req() request: Request): Promise<ProductResponse[]> {
 		const user = request.user as UpdateUserDto
 
 		return this.productService.getAllByCategory(user.email, category_id)

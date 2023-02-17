@@ -4,6 +4,7 @@ import {
 	InternalServerErrorException,
 } from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
+import { IsNull } from 'sequelize-typescript'
 import { errors } from 'src/common/errors'
 import { UsersService } from '../users/users.service'
 import { CreateProductDto, UpdateProductDto } from './dto'
@@ -37,11 +38,12 @@ export class ProductsService {
 
 	async getAllByCategory(
 		email: string,
-		category_id: number,
+		category_id: number | "null",
 	): Promise<ProductResponse[]> {
 		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
 		try {
 			const currentUserId = await this.usersService.getUserIdByEmail(email)
+			if (category_id === 'null') category_id = null
 
 			return this.productRepository.findAll({
 				where: {
