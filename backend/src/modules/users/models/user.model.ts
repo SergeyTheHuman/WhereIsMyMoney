@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript'
+import { Category } from 'src/modules/categories/models'
 import { Product } from 'src/modules/products/models'
 
 @Table({ tableName: 'Users' })
@@ -53,4 +54,10 @@ export class User extends Model {
 		onUpdate: 'CASCADE',
 	})
 	products: Product[]
+
+	@HasMany(() => Category, {
+		onDelete: 'CASCADE',
+		onUpdate: 'CASCADE',
+	})
+	categories: Category[]
 }

@@ -49,5 +49,4 @@ export class Product extends Model {
 
 	@BelongsTo(() => User)
 	category: Category
-
 }
