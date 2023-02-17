@@ -1,3 +1,3 @@
-import { UserLoginDto } from './user-login.dto'
+import { AuthUserLoginDto } from './auth-user-login.dto'
 
-export { UserLoginDto }
+export { AuthUserLoginDto }

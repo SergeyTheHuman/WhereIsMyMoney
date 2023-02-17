@@ -10,7 +10,7 @@ import { TokenService } from '../token/token.service'
 import { CreateUserDto } from '../users/dto'
 import { UserResponsePublicWithToken } from '../users/response'
 import { UsersService } from '../users/users.service'
-import { UserLoginDto } from './dto'
+import { AuthUserLoginDto } from './dto'
 
 @Injectable()
 export class AuthService {
@@ -19,7 +19,7 @@ export class AuthService {
 		private readonly tokenService: TokenService,
 	) {}
 
-	async login(dto: UserLoginDto): Promise<UserResponsePublicWithToken> {
+	async login(dto: AuthUserLoginDto): Promise<UserResponsePublicWithToken> {
 		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
 		try {
 			console.log(dto)
