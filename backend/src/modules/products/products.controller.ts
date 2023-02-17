@@ -7,6 +7,7 @@ import {
 	Param,
 	Post,
 	Put,
+	Query,
 	Req,
 	UseGuards,
 } from '@nestjs/common'
@@ -46,6 +47,17 @@ export class ProductsController {
 		
 		return this.productService.getAll(user.email)
 	}
+
+	@ApiOperation({ summary: 'Get products by category' })
+	@ApiResponse({ status: 200, type: [ProductResponse] })
+	@UseGuards(JwtAuthGuard)
+	@Get('get-all-by-category')
+	@HttpCode(200)
+	async getAllByCategory(@Query('cat_id') category_id: number, @Req() request: Request): Promise<ProductResponse[]> {
+		const user = request.user as UpdateUserDto
+
+		return this.productService.getAllByCategory(user.email, category_id)
+	}
 	
 	@ApiOperation({ summary: 'Delete product' })
 	@ApiResponse({ status: 200, type: Boolean })
@@ -57,7 +69,7 @@ export class ProductsController {
 		return this.productService.delete(id, user.email)
 	}
 
-	@ApiOperation({ summary: 'Delete product' })
+	@ApiOperation({ summary: 'Update product' })
 	@ApiResponse({ status: 200, type: ProductResponse })
 	@UseGuards(JwtAuthGuard)
 	@Put(':id')

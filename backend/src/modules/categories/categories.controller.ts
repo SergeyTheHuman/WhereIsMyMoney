@@ -58,7 +58,7 @@ export class CategoriesController {
 		return this.categoriesService.delete(id, user.email)
 	}
 
-	@ApiOperation({ summary: 'Delete product' })
+	@ApiOperation({ summary: 'Update category' })
 	@ApiResponse({ status: 200, type: CategoryResponse })
 	@UseGuards(JwtAuthGuard)
 	@Put(':id')

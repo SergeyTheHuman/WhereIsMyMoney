@@ -1,7 +1,7 @@
-import { Body, Controller, HttpCode, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from '../users/dto';
-import { UserResponse, UserResponsePublic, UserResponsePublicWithToken, UserResponseWithToken } from '../users/response';
+import { UserResponsePublic, UserResponsePublicWithToken, UserResponseWithToken } from '../users/response';
 import { AuthService } from './auth.service';
 import { UserLoginDto } from './dto';
 

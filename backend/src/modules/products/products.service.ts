@@ -5,7 +5,6 @@ import {
 } from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
 import { errors } from 'src/common/errors'
-import { UpdateUserDto } from '../users/dto'
 import { UsersService } from '../users/users.service'
 import { CreateProductDto, UpdateProductDto } from './dto'
 import { Product } from './models'
@@ -26,6 +25,28 @@ export class ProductsService {
 			return this.productRepository.findAll({
 				where: {
 					user_id: currentUserId,
+				},
+				attributes: {
+					exclude: ['createdAt', 'updatedAt', 'user_id'],
+				},
+			})
+		} catch (e) {
+			throw error
+		}
+	}
+
+	async getAllByCategory(
+		email: string,
+		category_id: number,
+	): Promise<ProductResponse[]> {
+		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
+		try {
+			const currentUserId = await this.usersService.getUserIdByEmail(email)
+
+			return this.productRepository.findAll({
+				where: {
+					user_id: currentUserId,
+					category_id,
 				},
 				attributes: {
 					exclude: ['createdAt', 'updatedAt', 'user_id'],
