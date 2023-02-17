@@ -14,7 +14,7 @@ import {
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { Request } from 'express'
 import { JwtAuthGuard } from 'src/guards/jwt-guard'
-import { UpdateUserDto } from '../users/dto'
+import { UpdateUserDto, UserFromRequestDto } from '../users/dto'
 import { CreateProductDto, UpdateProductDto } from './dto'
 import { ProductsService } from './products.service'
 import { ProductResponse } from './responses'
@@ -33,7 +33,7 @@ export class ProductsController {
 		@Body() dto: CreateProductDto,
 		@Req() request: Request,
 	): Promise<ProductResponse> {
-		const user = request.user as UpdateUserDto
+		const user = request.user as UserFromRequestDto
 		return this.productService.create(user.email, dto)
 	}
 
@@ -43,7 +43,7 @@ export class ProductsController {
 	@Get('get-all')
 	@HttpCode(200)
 	async getAll(@Req() request: Request): Promise<ProductResponse[]> {
-		const user = request.user as UpdateUserDto
+		const user = request.user as UserFromRequestDto
 		
 		return this.productService.getAll(user.email)
 	}
@@ -54,7 +54,7 @@ export class ProductsController {
 	@Get('get-all-by-category')
 	@HttpCode(200)
 	async getAllByCategory(@Query('cat_id') category_id: number | "null", @Req() request: Request): Promise<ProductResponse[]> {
-		const user = request.user as UpdateUserDto
+		const user = request.user as UserFromRequestDto
 
 		return this.productService.getAllByCategory(user.email, category_id)
 	}
@@ -65,7 +65,7 @@ export class ProductsController {
 	@Delete(':id')
 	@HttpCode(200)
 	async delete(@Param('id') id: number, @Req() request: Request): Promise<boolean> {
-		const user = request.user as UpdateUserDto
+		const user = request.user as UserFromRequestDto
 		return this.productService.delete(id, user.email)
 	}
 
@@ -79,7 +79,7 @@ export class ProductsController {
 		@Body() dto: UpdateProductDto,
 		@Req() request: Request,
 	): Promise<ProductResponse> {
-		const user = request.user as UpdateUserDto
+		const user = request.user as UserFromRequestDto
 		return this.productService.update(id, dto, user.email)
 	}
 }

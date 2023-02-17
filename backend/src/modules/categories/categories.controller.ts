@@ -13,7 +13,7 @@ import {
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { Request } from 'express'
 import { JwtAuthGuard } from 'src/guards/jwt-guard'
-import { UpdateUserDto } from '../users/dto'
+import { UpdateUserDto, UserFromRequestDto } from '../users/dto'
 import { CategoriesService } from './categories.service'
 import { CreateCategoryDto, UpdateCategoryDto } from './dto'
 import { CategoryResponse } from './responses'
@@ -32,7 +32,7 @@ export class CategoriesController {
 		@Body() dto: CreateCategoryDto,
 		@Req() request: Request,
 	): Promise<CategoryResponse> {
-		const user = request.user as UpdateUserDto
+		const user = request.user as UserFromRequestDto
 
 		return this.categoriesService.create(user.email, dto)
 	}
@@ -43,7 +43,7 @@ export class CategoriesController {
 	@Get('get-all')
 	@HttpCode(200)
 	async getAll(@Req() request: Request): Promise<CategoryResponse[]> {
-		const user = request.user as UpdateUserDto
+		const user = request.user as UserFromRequestDto
 		
 		return this.categoriesService.getAll(user.email)
 	}
@@ -54,7 +54,7 @@ export class CategoriesController {
 	@Delete(':id')
 	@HttpCode(200)
 	async delete(@Param('id') id: number, @Req() request: Request): Promise<boolean> {
-		const user = request.user as UpdateUserDto
+		const user = request.user as UserFromRequestDto
 		return this.categoriesService.delete(id, user.email)
 	}
 
@@ -68,7 +68,7 @@ export class CategoriesController {
 		@Body() dto: UpdateCategoryDto,
 		@Req() request: Request,
 	): Promise<CategoryResponse> {
-		const user = request.user as UpdateUserDto
+		const user = request.user as UserFromRequestDto
 		return this.categoriesService.update(id, dto, user.email)
 	}
 }

@@ -11,7 +11,7 @@ import {
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { Request } from 'express'
 import { JwtAuthGuard } from 'src/guards/jwt-guard'
-import { UpdateUserDto, UpdateUserPasswordDto } from './dto'
+import { UpdateUserDto, UpdateUserPasswordDto, UserFromRequestDto } from './dto'
 import { UserResponsePublic } from './response'
 import { UsersService } from './users.service'
 
@@ -38,7 +38,7 @@ export class UsersController {
 		@Body() dto: UpdateUserDto,
 		@Req() request: Request,
 	): Promise<UserResponsePublic> {
-		const user = request.user as UpdateUserDto
+		const user = request.user as UserFromRequestDto
 
 		return this.usersService.update(user.email, dto)
 	}
@@ -52,7 +52,7 @@ export class UsersController {
 		@Body() dto: UpdateUserPasswordDto,
 		@Req() request: Request,
 	): Promise<boolean> {
-		const user = request.user as UpdateUserDto
+		const user = request.user as UserFromRequestDto
 
 		return this.usersService.updatePassword(user.email, dto)
 	}
@@ -63,7 +63,7 @@ export class UsersController {
 	@HttpCode(200)
 	@Delete('delete')
 	async deleteUser(@Req() request: Request): Promise<boolean> {
-		const user = request.user as UpdateUserDto
+		const user = request.user as UserFromRequestDto
 
 		return this.usersService.delete(user.email)
 	}
