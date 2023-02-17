@@ -10,7 +10,7 @@ import {
 	Req,
 	UseGuards,
 } from '@nestjs/common'
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { Request } from 'express'
 import { JwtAuthGuard } from 'src/guards/jwt-guard'
 import { UpdateUserDto, UserFromRequestDto } from '../users/dto'
@@ -26,6 +26,7 @@ export class CategoriesController {
 	@ApiOperation({ summary: 'Add category' })
 	@ApiResponse({ status: 200, type: CreateCategoryDto })
 	@UseGuards(JwtAuthGuard)
+	@ApiBearerAuth()
 	@Post('create')
 	@HttpCode(201)
 	async create(
@@ -40,6 +41,7 @@ export class CategoriesController {
 	@ApiOperation({ summary: 'Get all categories' })
 	@ApiResponse({ status: 200, type: [CategoryResponse] })
 	@UseGuards(JwtAuthGuard)
+	@ApiBearerAuth()
 	@Get('get-all')
 	@HttpCode(200)
 	async getAll(@Req() request: Request): Promise<CategoryResponse[]> {
@@ -51,6 +53,7 @@ export class CategoriesController {
 	@ApiOperation({ summary: 'Delete category' })
 	@ApiResponse({ status: 200, type: Boolean })
 	@UseGuards(JwtAuthGuard)
+	@ApiBearerAuth()
 	@Delete(':id')
 	@HttpCode(200)
 	async delete(@Param('id') id: number, @Req() request: Request): Promise<boolean> {
@@ -61,6 +64,7 @@ export class CategoriesController {
 	@ApiOperation({ summary: 'Update category' })
 	@ApiResponse({ status: 200, type: CategoryResponse })
 	@UseGuards(JwtAuthGuard)
+	@ApiBearerAuth()
 	@Put(':id')
 	@HttpCode(200)
 	async update(

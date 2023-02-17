@@ -8,7 +8,7 @@ import {
 	Req,
 	UseGuards,
 } from '@nestjs/common'
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { Request } from 'express'
 import { JwtAuthGuard } from 'src/guards/jwt-guard'
 import { UpdateUserDto, UpdateUserPasswordDto, UserFromRequestDto } from './dto'
@@ -23,6 +23,7 @@ export class UsersController {
 	@ApiOperation({ summary: 'Get all users' })
 	@ApiResponse({ status: 200, type: [UserResponsePublic] })
 	@UseGuards(JwtAuthGuard)
+	@ApiBearerAuth()
 	@Get('get-all')
 	@HttpCode(200)
 	async getUsers(): Promise<UserResponsePublic[]> {
@@ -32,6 +33,7 @@ export class UsersController {
 	@ApiOperation({ summary: 'Update profile' })
 	@ApiResponse({ status: 200, type: UserResponsePublic })
 	@UseGuards(JwtAuthGuard)
+	@ApiBearerAuth()
 	@HttpCode(200)
 	@Patch('update')
 	async updateUser(
@@ -46,6 +48,7 @@ export class UsersController {
 	@ApiOperation({ summary: 'Update user password' })
 	@ApiResponse({ status: 200, type: Boolean })
 	@UseGuards(JwtAuthGuard)
+	@ApiBearerAuth()
 	@HttpCode(200)
 	@Patch('update-password')
 	async updateUserPassword(
@@ -60,6 +63,7 @@ export class UsersController {
 	@ApiOperation({ summary: 'Delete profile' })
 	@ApiResponse({ status: 200, type: Boolean })
 	@UseGuards(JwtAuthGuard)
+	@ApiBearerAuth()
 	@HttpCode(200)
 	@Delete('delete')
 	async deleteUser(@Req() request: Request): Promise<boolean> {

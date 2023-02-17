@@ -11,7 +11,7 @@ import {
 	Req,
 	UseGuards,
 } from '@nestjs/common'
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { Request } from 'express'
 import { JwtAuthGuard } from 'src/guards/jwt-guard'
 import { UpdateUserDto, UserFromRequestDto } from '../users/dto'
@@ -27,6 +27,7 @@ export class ProductsController {
 	@ApiOperation({ summary: 'Add product' })
 	@ApiResponse({ status: 200, type: ProductResponse })
 	@UseGuards(JwtAuthGuard)
+	@ApiBearerAuth()
 	@Post('create')
 	@HttpCode(201)
 	async create(
@@ -40,6 +41,7 @@ export class ProductsController {
 	@ApiOperation({ summary: 'Get all products' })
 	@ApiResponse({ status: 200, type: [ProductResponse] })
 	@UseGuards(JwtAuthGuard)
+	@ApiBearerAuth()
 	@Get('get-all')
 	@HttpCode(200)
 	async getAll(@Req() request: Request): Promise<ProductResponse[]> {
@@ -51,6 +53,7 @@ export class ProductsController {
 	@ApiOperation({ summary: 'Get products by category' })
 	@ApiResponse({ status: 200, type: [ProductResponse] })
 	@UseGuards(JwtAuthGuard)
+	@ApiBearerAuth()
 	@Get('get-all-by-category')
 	@HttpCode(200)
 	async getAllByCategory(@Query('cat_id') category_id: number | "null", @Req() request: Request): Promise<ProductResponse[]> {
@@ -62,6 +65,7 @@ export class ProductsController {
 	@ApiOperation({ summary: 'Delete product' })
 	@ApiResponse({ status: 200, type: Boolean })
 	@UseGuards(JwtAuthGuard)
+	@ApiBearerAuth()
 	@Delete(':id')
 	@HttpCode(200)
 	async delete(@Param('id') id: number, @Req() request: Request): Promise<boolean> {
@@ -72,6 +76,7 @@ export class ProductsController {
 	@ApiOperation({ summary: 'Update product' })
 	@ApiResponse({ status: 200, type: ProductResponse })
 	@UseGuards(JwtAuthGuard)
+	@ApiBearerAuth()
 	@Put(':id')
 	@HttpCode(200)
 	async update(
