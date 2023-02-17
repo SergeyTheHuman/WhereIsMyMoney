@@ -5,4 +5,5 @@ export const errors = {
 	USER_NOT_FOUND: 'User not found',
 	WRONG_PASSWORD: 'Wrong password',
 	NO_ACCESS: 'Forbidden',
+	PASSWORDS_ARE_SAME: 'Passwords are the same',
 }

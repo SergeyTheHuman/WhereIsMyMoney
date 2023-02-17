@@ -1,8 +1,13 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common'
+import {
+	BadRequestException,
+	Injectable,
+	InternalServerErrorException,
+	NotFoundException,
+} from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
 import * as bcrypt from 'bcrypt'
 import { errors } from 'src/common/errors'
-import { CreateUserDto, UpdateUserDto } from './dto'
+import { CreateUserDto, UpdateUserDto, UpdateUserPasswordDto } from './dto'
 import { User } from './models'
 import { UserResponse, UserResponsePublic } from './response'
 
@@ -95,6 +100,43 @@ export class UsersService {
 		try {
 			await this.userRepository.update(dto, { where: { email } })
 			return dto
+		} catch (e) {
+			throw error
+		}
+	}
+
+	async updatePassword(
+		email: string,
+		dto: UpdateUserPasswordDto,
+	): Promise<boolean> {
+		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
+		try {
+			if (dto.newPassword === dto.oldPassword) {
+				error = new BadRequestException(errors.PASSWORDS_ARE_SAME)
+				throw new Error()
+			}
+
+			const existUser = await this.findUserByEmail(email)
+			if (!existUser) {
+				error = new NotFoundException(errors.USER_NOT_FOUND)
+				throw new Error()
+			}
+
+			const isPasswordCorrect = await bcrypt.compare(
+				dto.oldPassword,
+				existUser.password,
+			)
+			if (!isPasswordCorrect) {
+				error = new BadRequestException(errors.WRONG_PASSWORD)
+				throw new Error()
+			}
+
+			const newPassword = await this.hashPassword(dto.newPassword)
+
+			return !!this.userRepository.update(
+				{ password: newPassword },
+				{ where: { email } },
+			)
 		} catch (e) {
 			throw error
 		}

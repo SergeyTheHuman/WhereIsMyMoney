@@ -27,6 +27,7 @@ export class CreateUserDto {
 		example: 'secretPassword123',
 		description: 'Person password',
 	})
+	@MinLength(3, { message: 'Password is too short' })
 	@IsString()
 	password: string
 }

@@ -11,9 +11,8 @@ import {
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { Request } from 'express'
 import { JwtAuthGuard } from 'src/guards/jwt-guard'
-import { UpdateUserDto } from './dto'
-import { User } from './models'
-import { UserResponse, UserResponsePublic } from './response'
+import { UpdateUserDto, UpdateUserPasswordDto } from './dto'
+import { UserResponsePublic } from './response'
 import { UsersService } from './users.service'
 
 @ApiTags('Users')
@@ -42,6 +41,20 @@ export class UsersController {
 		const user = request.user as UpdateUserDto
 
 		return this.usersService.update(user.email, dto)
+	}
+
+	@ApiOperation({ summary: 'Update user password' })
+	@ApiResponse({ status: 200, type: Boolean })
+	@UseGuards(JwtAuthGuard)
+	@HttpCode(200)
+	@Patch('update-password')
+	async updateUserPassword(
+		@Body() dto: UpdateUserPasswordDto,
+		@Req() request: Request,
+	): Promise<boolean> {
+		const user = request.user as UpdateUserDto
+
+		return this.usersService.updatePassword(user.email, dto)
 	}
 
 	@ApiOperation({ summary: 'Delete profile' })
