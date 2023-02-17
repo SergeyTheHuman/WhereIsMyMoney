@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript'
+import { Category } from 'src/modules/categories/models'
 import { User } from 'src/modules/users/models'
 
 @Table({ tableName: 'Products' })
@@ -13,18 +14,6 @@ export class Product extends Model {
 	})
 	id: number
 
-	@ApiProperty({ example: 1, description: 'User id of the user who added this product' })
-	@ForeignKey(() => User)
-	@Column({
-		type: DataType.INTEGER,
-		unique: false,
-		allowNull: false,
-	})
-	user_id: number
-
-	@BelongsTo(() => User)
-	user: User
-
 	@ApiProperty({ example: 120, description: 'Product name' })
 	@Column({
 		type: DataType.STRING,
@@ -37,4 +26,27 @@ export class Product extends Model {
 	})
 	price: number
 
+	@ApiProperty({ example: 1, description: 'User id of the user who added this product' })
+	@ForeignKey(() => User)
+	@Column({
+		type: DataType.INTEGER,
+		unique: false,
+		allowNull: false,
+	})
+	user_id: number
+
+	@BelongsTo(() => User)
+	user: User
+
+	@ApiProperty({ example: 1, description: 'Category id of this product' })
+	@ForeignKey(() => Category)
+	@Column({
+		type: DataType.INTEGER,
+		unique: false,
+		allowNull: true,
+	})
+	category_id: number
+
+	@BelongsTo(() => User)
+	category: Category
 }
