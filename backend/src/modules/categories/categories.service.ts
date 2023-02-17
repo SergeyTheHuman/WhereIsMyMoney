@@ -1,4 +1,8 @@
-import { ForbiddenException, Injectable, InternalServerErrorException } from '@nestjs/common'
+import {
+	ForbiddenException,
+	Injectable,
+	InternalServerErrorException,
+} from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
 import { errors } from 'src/common/errors'
 import { UsersService } from '../users/users.service'
@@ -19,25 +23,25 @@ export class CategoriesService {
 		dto: UpdateCategoryDto,
 		email: string,
 	): Promise<CategoryResponse> {
-			let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
-			try {
-				const isProductOwner = this.isCategoryOwner(id, email)
-	
-				if (!isProductOwner) {
-					error = new ForbiddenException(errors.NO_ACCESS)
-					throw new Error()
-				}
-	
-				await this.categoryRepository.update(dto, {
-					where: {
-						id,
-					},
-				})
-	
-				return dto
-			} catch (e) {
-				throw error
+		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
+		try {
+			const isProductOwner = this.isCategoryOwner(id, email)
+
+			if (!isProductOwner) {
+				error = new ForbiddenException(errors.NO_ACCESS)
+				throw new Error()
 			}
+
+			await this.categoryRepository.update(dto, {
+				where: {
+					id,
+				},
+			})
+
+			return { ...dto, id }
+		} catch (e) {
+			throw error
+		}
 	}
 
 	async isCategoryOwner(categoryId: number, email: string) {
@@ -47,7 +51,7 @@ export class CategoriesService {
 		return currentCategory?.user_id === currentUserId
 	}
 
-	async getCategoryById(id: number){
+	async getCategoryById(id: number) {
 		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
 		try {
 			return this.categoryRepository.findOne({ where: { id } })
@@ -72,16 +76,10 @@ export class CategoriesService {
 				},
 			})
 
-			if (isDeleted) this.setFieldsToNull(id)
-
 			return isDeleted
 		} catch (e) {
 			throw error
 		}
-	}
-
-	async setFieldsToNull(categoryId: number) {
-		//TODO: сделать обновление всех продуктов с выставлением категории в NULL
 	}
 
 	async getAll(email: string): Promise<CategoryResponse[]> {
@@ -109,14 +107,15 @@ export class CategoriesService {
 		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
 		try {
 			const currentUserId = await this.usersService.getUserIdByEmail(email)
-			
+
 			const category = {
 				user_id: currentUserId,
 				name: dto.name,
 			}
-			
-			await this.categoryRepository.create(category)
-			return dto
+
+			const newCategory = await this.categoryRepository.create(category)
+
+			return { ...dto, id: newCategory.id }
 		} catch (e) {
 			throw error
 		}

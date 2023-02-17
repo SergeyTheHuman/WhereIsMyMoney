@@ -22,11 +22,11 @@ export class UsersController {
 	constructor(private usersService: UsersService) {}
 
 	@ApiOperation({ summary: 'Get all users' })
-	@ApiResponse({ status: 200, type: [User] })
+	@ApiResponse({ status: 200, type: [UserResponsePublic] })
 	@UseGuards(JwtAuthGuard)
 	@Get('get-all')
 	@HttpCode(200)
-	async getUsers(): Promise<UserResponse[]> {
+	async getUsers(): Promise<UserResponsePublic[]> {
 		return this.usersService.getUsers()
 	}
 

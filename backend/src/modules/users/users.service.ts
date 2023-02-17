@@ -30,7 +30,7 @@ export class UsersService {
 				email,
 			},
 		})
-		return user.id 
+		return user.id
 	}
 
 	async findUserByUserName(userName: string): Promise<UserResponse> {
@@ -74,10 +74,14 @@ export class UsersService {
 		}
 	}
 
-	async getUsers(): Promise<UserResponse[]> {
+	async getUsers(): Promise<UserResponsePublic[]> {
 		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
 		try {
-			return this.userRepository.findAll({})
+			return this.userRepository.findAll({
+				attributes: {
+					exclude: ['password'],
+				},
+			})
 		} catch (e) {
 			throw error
 		}
@@ -96,10 +100,10 @@ export class UsersService {
 		}
 	}
 
-	async delete(email: string): Promise<boolean>{
+	async delete(email: string): Promise<boolean> {
 		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
 		try {
-			return !!this.userRepository.destroy({where: {email}})
+			return !!this.userRepository.destroy({ where: { email } })
 		} catch (e) {
 			throw error
 		}

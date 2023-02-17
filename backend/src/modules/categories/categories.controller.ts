@@ -10,7 +10,7 @@ import {
 	Req,
 	UseGuards,
 } from '@nestjs/common'
-import { ApiOperation, ApiResponse } from '@nestjs/swagger'
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { Request } from 'express'
 import { JwtAuthGuard } from 'src/guards/jwt-guard'
 import { UpdateUserDto } from '../users/dto'
@@ -18,6 +18,7 @@ import { CategoriesService } from './categories.service'
 import { CreateCategoryDto, UpdateCategoryDto } from './dto'
 import { CategoryResponse } from './responses'
 
+@ApiTags('Categories')
 @Controller('categories')
 export class CategoriesController {
 	constructor(private readonly categoriesService: CategoriesService) {}

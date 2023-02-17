@@ -10,7 +10,7 @@ import {
 	Req,
 	UseGuards,
 } from '@nestjs/common'
-import { ApiOperation, ApiResponse } from '@nestjs/swagger'
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { Request } from 'express'
 import { JwtAuthGuard } from 'src/guards/jwt-guard'
 import { UpdateUserDto } from '../users/dto'
@@ -18,12 +18,13 @@ import { CreateProductDto, UpdateProductDto } from './dto'
 import { ProductsService } from './products.service'
 import { ProductResponse } from './responses'
 
+@ApiTags('Products')
 @Controller('products')
 export class ProductsController {
 	constructor(private readonly productService: ProductsService) {}
 
 	@ApiOperation({ summary: 'Add product' })
-	@ApiResponse({ status: 200, type: CreateProductDto })
+	@ApiResponse({ status: 200, type: ProductResponse })
 	@UseGuards(JwtAuthGuard)
 	@Post('create')
 	@HttpCode(201)

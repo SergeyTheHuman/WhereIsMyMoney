@@ -51,8 +51,8 @@ export class ProductsService {
 				price: dto.price,
 			}
 
-			await this.productRepository.create(product)
-			return dto
+			const newProduct = await this.productRepository.create(product)
+			return { ...dto, id: newProduct.id }
 		} catch (e) {
 			throw error
 		}
@@ -94,7 +94,7 @@ export class ProductsService {
 				},
 			})
 
-			return dto
+			return { ...dto, id }
 		} catch (e) {
 			throw error
 		}

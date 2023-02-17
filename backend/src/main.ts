@@ -12,7 +12,7 @@ async function bootstrap() {
 
 	const configSwagger = new DocumentBuilder()
 		.setTitle('WhereIsMyMoney api')
-		.setDescription('This is an api for WIMM application')
+		.setDescription('This is an api for WhereIsMyMoney application')
 		.setVersion('1.0')
 		.build()
 		
