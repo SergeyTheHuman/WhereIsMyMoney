@@ -8,10 +8,7 @@ import * as bcrypt from 'bcrypt'
 import { errors } from 'src/common/errors'
 import { TokenService } from '../token/token.service'
 import { CreateUserDto } from '../users/dto'
-import {
-	UserResponsePublic,
-	UserResponsePublicWithToken,
-} from '../users/response'
+import { UserResponsePublicWithToken } from '../users/response'
 import { UsersService } from '../users/users.service'
 import { UserLoginDto } from './dto'
 
@@ -25,6 +22,7 @@ export class AuthService {
 	async login(dto: UserLoginDto): Promise<UserResponsePublicWithToken> {
 		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
 		try {
+			console.log(dto)
 			const existUser = await this.usersService.findUserByEmail(dto.email)
 
 			if (!existUser) {
@@ -54,7 +52,7 @@ export class AuthService {
 		}
 	}
 
-	async register(dto: CreateUserDto): Promise<UserResponsePublic> {
+	async register(dto: CreateUserDto): Promise<UserResponsePublicWithToken> {
 		let error = new InternalServerErrorException(errors.SOMETHING_WRONG)
 
 		try {
@@ -73,7 +71,10 @@ export class AuthService {
 				throw new Error()
 			}
 
-			return this.usersService.createUser(dto)
+			const password = dto.password
+			await this.usersService.createUser(dto)
+
+			return this.login({ email: dto.email, password })
 		} catch (e) {
 			throw error
 		}
