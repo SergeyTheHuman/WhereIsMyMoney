@@ -1,38 +1,42 @@
 # compiled output
-backend/dist
-backend/node_modules
+backend/app/dist
+backend/app/node_modules
 
 # env
-backend/.env
+backend/app/.env
+
+# docker
+backend/app/Dockerfile
+backend/docker-compose.yml
 
 # Logs
-backend/logs
-backend/*.log
-backend/npm-debug.log*
-backend/pnpm-debug.log*
-backend/yarn-debug.log*
-backend/yarn-error.log*
-backend/lerna-debug.log*
+backend/app/logs
+backend/app/*.log
+backend/app/npm-debug.log*
+backend/app/pnpm-debug.log*
+backend/app/yarn-debug.log*
+backend/app/yarn-error.log*
+backend/app/lerna-debug.log*
 
 # OS
-backend/.DS_Store
+backend/app/.DS_Store
 
 # Tests
-backend/coverage
-backend/.nyc_output
+backend/app/coverage
+backend/app/.nyc_output
 
 # IDEs and editors
-backend/.idea
-backend/.project
-backend/.classpath
-backend/.c9/
-backend/*.launch
-backend/.settings/
-backend/*.sublime-workspace
+backend/app/.idea
+backend/app/.project
+backend/app/.classpath
+backend/app/.c9/
+backend/app/*.launch
+backend/app/.settings/
+backend/app/*.sublime-workspace
 
 # IDE - VSCode
-backend/.vscode/*
-backend/!.vscode/settings.json
-backend/!.vscode/tasks.json
-backend/!.vscode/launch.json
-backend/!.vscode/extensions.json
+backend/app/.vscode/*
+backend/app/!.vscode/settings.json
+backend/app/!.vscode/tasks.json
+backend/app/!.vscode/launch.json
+backend/app/!.vscode/extensions.json
