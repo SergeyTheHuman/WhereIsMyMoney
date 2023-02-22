@@ -4,6 +4,5 @@
 	"tabWidth": 3,
 	"semi": false,
 	"useTabs": true,
-	"jsxSingleQuote": true,
-	"organizeImportsSkipDestructiveCodeActions": true
+	"jsxSingleQuote": true
  }

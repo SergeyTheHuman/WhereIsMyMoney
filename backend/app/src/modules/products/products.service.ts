@@ -4,7 +4,6 @@ import {
 	InternalServerErrorException,
 } from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
-import { IsNull } from 'sequelize-typescript'
 import { errors } from 'src/common/errors'
 import { UsersService } from '../users/users.service'
 import { CreateProductDto, UpdateProductDto } from './dto'

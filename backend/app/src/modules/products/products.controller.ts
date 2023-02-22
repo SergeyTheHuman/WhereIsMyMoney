@@ -19,7 +19,7 @@ import {
 } from '@nestjs/swagger'
 import { Request } from 'express'
 import { JwtAuthGuard } from 'src/guards/jwt-guard'
-import { UpdateUserDto, UserFromRequestDto } from '../users/dto'
+import { UserFromRequestDto } from '../users/dto'
 import { CreateProductDto, UpdateProductDto } from './dto'
 import { ProductsService } from './products.service'
 import { ProductResponse } from './responses'
