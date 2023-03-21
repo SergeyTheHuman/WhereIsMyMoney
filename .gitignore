@@ -1,42 +1,86 @@
 # compiled output
-backend/app/dist
-backend/app/node_modules
+**/app/dist
+**/app/node_modules
+**/app/.vscode
+**/app/.next
 
 # env
-backend/app/.env
+**/app/.env
 
 # docker
-backend/app/Dockerfile
+**/app/Dockerfile
 backend/docker-compose.yml
 
 # Logs
-backend/app/logs
-backend/app/*.log
-backend/app/npm-debug.log*
-backend/app/pnpm-debug.log*
-backend/app/yarn-debug.log*
-backend/app/yarn-error.log*
-backend/app/lerna-debug.log*
+**/app/logs
+**/app/*.log
+**/app/npm-debug.log*
+**/app/pnpm-debug.log*
+**/app/yarn-debug.log*
+**/app/yarn-error.log*
+**/app/lerna-debug.log*
 
 # OS
-backend/app/.DS_Store
+**/app/.DS_Store
 
 # Tests
-backend/app/coverage
-backend/app/.nyc_output
+**/app/coverage
+**/app/.nyc_output
 
 # IDEs and editors
-backend/app/.idea
-backend/app/.project
-backend/app/.classpath
-backend/app/.c9/
-backend/app/*.launch
-backend/app/.settings/
-backend/app/*.sublime-workspace
+**/app/.idea
+**/app/.project
+**/app/.classpath
+**/app/.c9/
+**/app/*.launch
+**/app/.settings/
+**/app/*.sublime-workspace
 
 # IDE - VSCode
-backend/app/.vscode/*
-backend/app/!.vscode/settings.json
-backend/app/!.vscode/tasks.json
-backend/app/!.vscode/launch.json
-backend/app/!.vscode/extensions.json
+**/app/.vscode/*
+**/app/!.vscode/settings.json
+**/app/!.vscode/tasks.json
+**/app/!.vscode/launch.json
+**/app/!.vscode/extensions.json
+
+
+# Compiled output
+frontend/app/dist
+frontend/app/tmp
+frontend/app/out-tsc
+frontend/app/bazel-out
+
+# Node
+frontend/app/node_modules
+frontend/appnpm-debug.log
+frontend/appyarn-error.log
+
+# IDEs and editors
+frontend/app/.idea/
+frontend/app/.project
+frontend/app/.classpath
+frontend/app/.c9/
+frontend/app/*.launch
+frontend/app/.settings/
+frontend/app/*.sublime-workspace
+
+# Visual Studio Code
+frontend/app/.vscode/*
+frontend/app/!.vscode/settings.json
+frontend/app/!.vscode/tasks.json
+frontend/app/!.vscode/launch.json
+frontend/app/!.vscode/extensions.json
+frontend/app/.history/*
+
+# Miscellaneous
+frontend/app/.angular/cache
+frontend/app/.sass-cache/
+frontend/app/connect.lock
+frontend/app/coverage
+frontend/app/libpeerconnection.log
+frontend/app/testem.log
+frontend/app/typings
+
+# System files
+frontend/app/.DS_Store
+frontend/app/Thumbs.db
